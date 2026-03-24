@@ -4,6 +4,57 @@
 {% block title %}ZooStudy - Register{% endblock %}
 
 {% block content %}
-<h1>Register</h1>
-<p>TODO: Implement this page.</p>
+<div class="registeration-page">
+    <div class="signup-section">
+        <div class ="welcome-message">
+            <h1>Welcome to Study Zoo </h1>
+        </div>
+
+        <div class="message-box">
+            <p>Study Zoo excited to have you! Fill your details and lets get learning!</p>
+        </div>
+
+        {% if user_form.errors %}
+            <div class="form-errors">
+                {% for field, errors in user_form.errors.items %}
+                    {% for error in errors %}
+                        <p class="form-error-text">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'zoo_app:register' %}" class="sign-up-form">
+            {% csrf_token %}
+
+            <div class="field-container">
+                <label class="field-label">Username</label>
+                <input type="text" name="username" placeholder="Choose a zoo name" value="{{ user_form.username.value|default:'' }}">
+            </div>
+
+            <div class="field-container">
+                <label class="field-label">Email</label>
+                <input type="email" name="email" placeholder="StudyZoo@AnimalsEmail.com" value="{{ user_form.email.value|default:'' }}">
+            </div>
+
+            <div class="field-container">
+                <label class="field-label">Password</label>
+                <input type="password" name="password">
+            </div>
+
+            <div class="field-container">
+                <label class="field-label">Confirm Password</label>
+                <input type="password" name="confirm_password">
+            </div>
+
+            <button type="submit" class="sign-up">Sign up</button>
+        </form>
+
+        <div class="register-footer-login">
+            <p>Already a Study Zoo member? <a href="{% url 'zoo_app:login' %}">Log in</a></p>
+        </div>
+
+    </div>
+
+</div>
 {% endblock %}

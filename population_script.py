@@ -16,28 +16,28 @@ def add_animals():
     """
     animals_data = [
         # Desert animals (cheapest tier)
-        {'name': 'Camel', 'category': 'desert', 'cost': 2000},
-        {'name': 'Scorpion', 'category': 'desert', 'cost': 3000},
-        {'name': 'Rattlesnake', 'category': 'desert', 'cost': 3500},
+        {'name': 'Camel', 'category': 'desert', 'cost': 2000, 'image': 'animals/camel.png'},
+        {'name': 'Scorpion', 'category': 'desert', 'cost': 3000, 'image': 'animals/scorpion.png'},
+        {'name': 'Rattlesnake', 'category': 'desert', 'cost': 3500, 'image': 'animals/rattlesnake.png'},
         # Aquatic animals
-        {'name': 'Dolphin', 'category': 'aquatic', 'cost': 4000},
-        {'name': 'Octopus', 'category': 'aquatic', 'cost': 4800},
-        {'name': 'Clownfish', 'category': 'aquatic', 'cost': 6000},
+        {'name': 'Dolphin', 'category': 'aquatic', 'cost': 4000, 'image': 'animals/dolphin.png'},
+        {'name': 'Octopus', 'category': 'aquatic', 'cost': 4800, 'image': 'animals/octopus.png'},
+        {'name': 'Clownfish', 'category': 'aquatic', 'cost': 6000, 'image': 'animals/clownfish.png'},
         # Forest animals
-        {'name': 'Fox', 'category': 'forest', 'cost': 6500},
-        {'name': 'Deer', 'category': 'forest', 'cost': 7000},
-        {'name': 'Gorilla', 'category': 'forest', 'cost': 7500},
+        {'name': 'Fox', 'category': 'forest', 'cost': 6500, 'image': 'animals/fox.png'},
+        {'name': 'Deer', 'category': 'forest', 'cost': 7000, 'image': 'animals/deer.png'},
+        {'name': 'Gorilla', 'category': 'forest', 'cost': 7500, 'image': 'animals/gorilla.png'},
         # Polar animals (most expensive tier)
-        {'name': 'Penguin', 'category': 'polar', 'cost': 8500},
-        {'name': 'Polar Bear', 'category': 'polar', 'cost': 9000},
-        {'name': 'Snow Leopard', 'category': 'polar', 'cost': 10000},
+        {'name': 'Penguin', 'category': 'polar', 'cost': 8500, 'image': 'animals/penguin.png'},
+        {'name': 'Polar Bear', 'category': 'polar', 'cost': 9000, 'image': 'animals/polar_bear.png'},
+        {'name': 'Snow Leopard', 'category': 'polar', 'cost': 10000, 'image': 'animals/snow_leopard.png'},
     ]
 
     animals = {}
     for a in animals_data:
         animal, created = Animal.objects.get_or_create(
             name=a['name'],
-            defaults={'category': a['category'], 'cost': a['cost']}
+            defaults={'category': a['category'], 'cost': a['cost'], 'image': a['image']}
         )
         animals[a['name']] = animal
         print(f"  {'Created' if created else 'Found'} animal: {animal.name}")

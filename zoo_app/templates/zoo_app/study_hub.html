@@ -3,7 +3,85 @@
 
 {% block title %}ZooStudy - Study Hub{% endblock %}
 
+{% block extra_css %}{% endblock %}
+
 {% block content %}
-<h1>Study Hub</h1>
-<p>TODO: Implement this page.</p>
+<div class="study-page">
+    <h1 class="mb-4">📚 Study Hub</h1>
+
+    <!-- Timer -->
+    <div class="timer-box">
+        <div>Start a study session to earn 🪙 coins</div>
+        <div id="timer-display">00:00:00</div>
+        <div id="timer-coins">🪙 0 coins earned</div>
+        <div class="timer-btns mt-3">
+            <button class="timer-btn" id="btn-start">▶ Start</button>
+            <button class="timer-btn" id="btn-pause">⏸ Pause</button>
+            <button class="timer-btn" id="btn-stop">⏹ Stop & Save</button>
+        </div>
+    </div>
+
+    <!-- Add Task -->
+    <h2 class="section-title">➕ Add New Task</h2>
+    <div class="task-form-box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="task-form-label">Task Title</label>
+                    {{ task_form.title }}
+                </div>
+                <div class="col-md-6">
+                    <label class="task-form-label">Deadline</label>
+                    {{ task_form.deadline }}
+                </div>
+            </div>
+            <button type="submit" class="sign-up mt-3 task-submit-btn">Add Task</button>
+        </form>
+    </div>
+
+    <!-- Task List -->
+    <h2 class="section-title">📋 My Tasks</h2>
+    {% if tasks %}
+        {% for task in tasks %}
+        <div class="task-item {% if task.completed %}completed{% elif task.is_overdue %}overdue{% endif %}" id="task-{{ task.id }}">
+            <span>{{ task.title }}</span>
+            <div class="d-flex align-items-center gap-2">
+                {% if task.completed %}
+                    <span class="badge-done">✓ Done</span>
+                {% elif task.is_overdue %}
+                    <span class="badge-overdue">Overdue</span>
+                {% else %}
+                    <span class="badge-due">{{ task.time_remaining_display }}</span>
+                {% endif %}
+                <button class="toggle-btn"
+                        data-task-id="{{ task.id }}"
+                        data-completed="{{ task.completed|lower }}">
+                    {% if task.completed %}Undo{% else %}Done{% endif %}
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No tasks yet. Add one above!</p>
+    {% endif %}
+
+    <!-- Recent Sessions -->
+    <h2 class="section-title">⏱ Recent Study Sessions</h2>
+    {% if sessions %}
+        {% for session in sessions %}
+        <div class="session-item">
+            <span>{{ session.date }}</span>
+            <span>{{ session.duration_display }}</span>
+            <span>🪙 +{{ session.coins_earned }}</span>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No study sessions yet. Start the timer above!</p>
+    {% endif %}
+</div>
+
+<div id="session-toast"></div>
 {% endblock %}
+
+{% block extra_js %}{% endblock %}

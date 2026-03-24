@@ -3,7 +3,73 @@
 
 {% block title %}ZooStudy - Notes & Resources{% endblock %}
 
+{% block extra_css %}{% endblock %}
+
 {% block content %}
-<h1>Notes & Resources</h1>
-<p>TODO: Implement this page.</p>
+<div class="notes-page">
+    <h1 class="mb-2">📝 Notes & Resources</h1>
+    <p class="text-muted mb-4">Organise your notes and links by task.</p>
+
+    {% if tasks %}
+        {% for task in tasks %}
+        <div class="task-notes-section">
+            <div class="task-notes-header">
+                <span>{{ task.title }}</span>
+                <button class="toggle-form-btn" data-target="form-{{ task.id }}">+ Add Note</button>
+            </div>
+            <div class="task-notes-body">
+                {% if task.resources.all %}
+                    {% for resource in task.resources.all %}
+                    <div class="resource-card">
+                        <span class="resource-type-badge {% if resource.type == 'note' %}badge-note{% else %}badge-resource{% endif %}">
+                            {{ resource.get_type_display }}
+                        </span>
+                        <div><strong>{{ resource.title }}</strong></div>
+                        {% if resource.content %}<p class="resource-content">{{ resource.content }}</p>{% endif %}
+                        {% if resource.url %}<a href="{{ resource.url }}" target="_blank" rel="noopener" class="resource-url">🔗 {{ resource.url }}</a>{% endif %}
+                        <div class="resource-date">{{ resource.created_date|date:"M j, Y" }}</div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted resource-empty">No notes yet for this task.</p>
+                {% endif %}
+            </div>
+            <!-- Add note form (hidden by default via .add-note-form CSS) -->
+            <div class="add-note-form" id="form-{{ task.id }}">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" name="title" placeholder="Note title" required>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="type">
+                                <option value="note">📝 Note</option>
+                                <option value="resource">🔗 Resource</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <textarea name="content" placeholder="Content (optional)"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <input type="url" name="url" placeholder="URL (optional, e.g. https://...)">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-add-note">Save Note</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <p class="empty-icon">📋</p>
+            <h3>No tasks yet!</h3>
+            <p class="text-muted">Create tasks in Study Hub first, then add notes here.</p>
+            <a href="{% url 'zoo_app:study_hub' %}" class="sign-up empty-action-link">Go to Study Hub</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
+
+{% block extra_js %}{% endblock %}

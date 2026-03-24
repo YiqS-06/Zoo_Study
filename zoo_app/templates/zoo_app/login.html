@@ -4,6 +4,35 @@
 {% block title %}ZooStudy - Login{% endblock %}
 
 {% block content %}
-<h1>Login</h1>
-<p>TODO: Implement this page.</p>
+
+<div class="registeration-page">
+    <div class ="signup-section">
+        <div class="welcome-message">
+            <h1>Welcome Back Study Warrior, your animals have missed you 🐹</h1>
+        </div>
+
+        <div class="message-box">
+            <p>Log in to Zoo to check on your animsals</p>
+        </div>
+        <form method="post" action="{% url 'zoo_app:login' %}" class="sign-up-form">
+            {% csrf_token %}
+
+            <div class="field-container">
+                <label class="field-label">Username</label>
+                <input type="text" name="username" placeholder="Your zoo name">
+            </div>
+
+            <div class="field-container">
+                <label class="field-label">Password</label>
+                <input type="password" name="password" placeholder="Enter password">
+            </div>
+
+            <button type="submit" class="sign-up">Log in</button>
+        </form>
+
+        <div class="register-footer-login">
+            <p>New to Study Zoo? <a href="{% url 'zoo_app:register' %}">Create an account</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}

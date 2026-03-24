@@ -3,7 +3,64 @@
 
 {% block title %}ZooStudy - Animal Shop{% endblock %}
 
+{% block extra_css %}{% endblock %}
+
 {% block content %}
-<h1>Animal Shop</h1>
-<p>TODO: Implement this page.</p>
+<div class="shop-page">
+    <div class="shop-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <h1>🛒 Animal Shop</h1>
+        <div class="coin-display">🪙 {{ profile.currency }} coins</div>
+    </div>
+
+    <p class="text-muted">Study to earn coins (10 coins/min), then buy animals for your zoo!</p>
+
+    {% regroup animals by category as animals_by_category %}
+    {% for category in animals_by_category %}
+        <h2 class="section-title">
+            {% if category.grouper == 'desert' %}🏜️ Desert{% endif %}
+            {% if category.grouper == 'aquatic' %}🌊 Aquatic{% endif %}
+            {% if category.grouper == 'forest' %}🌲 Forest{% endif %}
+            {% if category.grouper == 'polar' %}❄️ Polar{% endif %}
+        </h2>
+        <div class="row g-3">
+            {% for animal in category.list %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="animal-card {% if animal.id in owned_ids %}owned{% endif %}">
+                    <div class="animal-img">
+                        {% if animal.image %}
+                            <img src="{{ animal.image.url }}" alt="{{ animal.name }}">
+                        {% else %}
+                            🐾
+                        {% endif %}
+                    </div>
+                    <div class="animal-info">
+                        <div class="animal-name">{{ animal.name }}</div>
+                        <div class="animal-category">{{ animal.get_category_display }}</div>
+                        <div class="animal-cost">🪙 {{ animal.cost }} coins</div>
+                        <div class="mt-2">
+                            {% if animal.id in owned_ids %}
+                                <button class="btn-buy btn-owned" disabled>✓ Owned</button>
+                            {% else %}
+                                <button class="btn-buy buy-btn"
+                                        data-animal-id="{{ animal.id }}"
+                                        data-animal-name="{{ animal.name }}"
+                                        data-cost="{{ animal.cost }}"
+                                        {% if profile.currency < animal.cost %}disabled title="Not enough coins"{% endif %}>
+                                    Buy (🪙 {{ animal.cost }})
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p>No animals available in the shop yet. Check back later!</p>
+    {% endfor %}
+</div>
+
+<div id="buy-message"></div>
 {% endblock %}
+
+{% block extra_js %}{% endblock %}

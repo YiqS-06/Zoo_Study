@@ -2,8 +2,40 @@
 {% load static %}
 
 {% block title %}ZooStudy - Welcome{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'zoo_app/css/home.css' %}">
+{% endblock %}
+    
 
 {% block content %}
-<h1>Welcome</h1>
-<p>TODO: Implement this page.</p>
+<div class="home-box">
+    <header class="zoo-header">
+        <h1 class="header-title-home">Study Zoo</h1>
+    </header>
+
+    <section class="Welcome-section">
+        <div class="Welcome-message">
+            <p>🐈 Welcome to Study Zoo, a website designed by students for students, to keep track of your academic progress, and to build
+                healthier learning habits! maintain a study streak whenever you log your study hours, convert your study hours into points and buy cute animals from the shop
+                our animals would need from you to take care of them, and you do that by studying hard, study hard for yourself and your animals. 🐇 </p>
+        </div>
+        <h3 class="tagline">🦉📚Lets get studying 📚🦉</h3>
+    </section>
+    <main class="main-study-area">
+        <div class="button-group">
+            <a href="{% url 'zoo_app:login' %}"class="sign-up">SIGN IN</a>
+            <a href="{% url 'zoo_app:register' %}" class="sign-up">SIGN UP</a>
+        </div>
+        <div class="goated-moscat-cat" >
+            <img src="{% static 'zoo_app/images/cat3.jpg' %}" alt="Cat Mascot" class="mascot-img">
+            <img src="{% static 'zoo_app/images/cat2.jpg' %}" alt="Cat Mascot" class="mascot-img">
+            <img src="{% static 'zoo_app/images/cat.jpg' %}" alt="Cat Mascot" class="mascot-img">
+        </div>
+    </main>
+    <footer class="home-footer">
+        <div class="footer">
+            <h5>✨Small progress adds up ✨</h5>
+        </div>
+    </footer>
+</div>
 {% endblock %}

@@ -13,4 +13,8 @@ urlpatterns = [
     path('zoo/shop/', views.shop, name='shop'),
     path('study/', views.study_hub, name='study_hub'),
     path('study/notes/', views.notes, name='notes'),
+    # AJAX endpoints
+    path('ajax/buy-animal/', views.buy_animal, name='buy_animal'),
+    path('ajax/log-session/', views.log_study_session, name='log_study_session'),
+    path('ajax/toggle-task/', views.toggle_task_complete, name='toggle_task_complete'),
 ]

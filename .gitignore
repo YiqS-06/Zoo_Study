@@ -12,6 +12,10 @@ env/
 *.sqlite3
 db.sqlite3
 media/
+staticfiles/
+
+# Packaging
+*.egg-info/
 
 # IDE
 .vscode/

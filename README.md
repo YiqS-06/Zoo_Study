@@ -93,11 +93,11 @@ zoo_study_project/
 
 | Member | Role |
 |--------|------|
-| Jasper | TBD |
-| Abdul | TBD |
-| Bonnie | TBD |
-| Noor | TBD |
-| Frank | TBD |
+| Jasper | Area A — Models & Database; Final code integration |
+| Abdul | Area B — User Auth & Testing |
+| Frank | Area C — Views & URLs |
+| Noor | Area D — Templates & CSS |
+| Bonnie | Area E — JavaScript/AJAX & Deployment |
 
 ### Role Divisions
 
